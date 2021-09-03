@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Build LaTeX to PDF
 
 # Controls when the workflow will run
 on:
@@ -47,10 +47,15 @@ jobs:
           # Arbitrary bash codes to be executed before compiling LaTeX documents
           #pre_compile: # optional
           # Arbitrary bash codes to be executed after compiling LaTeX documents
-          #post_compile: # optional
+          #post_compile: 
           # Instruct latexmk to enable --shell-escape
           #latexmk_shell_escape: # optional
           # Instruct latexmk to use LuaLaTeX
           #latexmk_use_lualatex: # optional
           # Instruct latexmk to use XeLaTeX
           #latexmk_use_xelatex: # optional
+      - uses: actions/upload-artifact@v2
+        with:
+          name: PDF
+          path: "*.pdf"
+
