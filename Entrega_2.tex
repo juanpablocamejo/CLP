@@ -1,0 +1,86 @@
+\documentclass[a4paper,10pt]{article} % a4paper es obvio y 10pt es el tamaño
+                                      % de la tipografía básica
+
+\usepackage[utf8]{inputenc} % Permite escribir acentos (leer este archivo en 
+                            % UTF8!)
+
+\usepackage[T1]{fontenc}    % Permite que el texto que se produce se pueda
+                            % copiar (incluídos los símbolos)
+
+\usepackage[spanish]{babel} % Hace que las palabras claves (como la fecha)
+                            % salgan en español
+
+\usepackage{fullpage}       % Pone márgenes más chicos que los estándares
+
+\setlength\parindent{0em}   % Elimina la identación
+
+\usepackage{amsmath,amssymb}        % Provee el entorno align*, entre otros
+
+\usepackage{url}            % No necesario en general. Es para poner links 
+                            % (como el que puse a overleaf)
+
+\usepackage{proof}          % Este paquete da el comando \infer. 
+
+\usepackage{logicproof}          % Sirve para escribir pruebas en estilo Fitch como lo hace Huth y Ryan
+\usepackage{xcolor}
+\usepackage{ulem}
+\newcommand{\f[1]}{\lambda #1\text{.}}
+
+% Más documentación:
+% http://www.actual.world/resources/tex/doc/Proofs.pdf
+
+\title{Entrega 2}
+\author{Juan Pablo Camejo (19803)}
+\date{\today}  % En vez de \today pueden poner el texto que quieran (como la 
+               % fecha de ayer por ejemplo). Si ponen \today, queda la fecha
+               % de compilación
+
+\begin{document}
+
+
+\maketitle   % Pone el título autor y fecha definidos antes
+
+\subsection*{Ejercicio 1}
+Encontrar 3 términos de PCF $t,v1,v2$ tales que $ t\rightarrow v1, t\rightarrow v2,$(con $v1\neq v2$) \\y además $\nexists u$ tal que $v1\to u \land v2 \to u$
+
+\subsection*{Solución}
+$$
+    \begin{aligned}
+    &t=(\f[x]1)((\f[y]y)2)\\
+    &v_1=1\\
+    &v_2=(\f[x]1)2\\
+\end{aligned}
+$$
+Como $v_1$ ya está en forma normal, $\nexists u$ tal que $v_1 \to u \land v_2 \to u$.
+
+\subsection*{Ejercicio 2}
+Modificar el conjunto de reglas de reducción de PCF para que use la estrategia CBV débil y fuerte.
+
+\subsection*{Solución}
+\subsubsection*{Reglas básicas:}
+$$
+\begin{aligned}
+    (\f[x]u) t &\to u[t/x] &&\text{(si t está en forma normal)}\\
+    p \odot q &\to n &&\text{con }\odot  \in \{+,-,\times, /\}\\
+    \text{ifz } 0 \text{ then } t \text{ else } u &\to t\\
+    \text{ifz } n \text{ then } t \text{ else } u &\to u &&\text{ si } n \neq 0\\
+    \mu .t &\to t[\mu . t/x] &&\text{(si t está en forma normal)}\\
+    \text{let } x = t \text{ in } u &\to u[t/x] &&\text{(si t está en forma normal)}\\
+\end{aligned}
+$$
+\subsubsection*{Reglas de congruencia:}
+$$
+\begin{aligned}
+    &&\frac{t \to r}{ \f[x]t \to \f[x]r} &&\text{(sólo para reducción fuerte)}\\
+    &&\frac{t \to r}{ ts \to rs} && \text{si $s$ está en forma normal}\\
+    &&\frac{t \to r}{ st \to sr} \\    
+    &&\frac{t \to r}{ t\odot s \to r \odot s}\\
+    &&\frac{t \to r}{ s\odot t \to s \odot r}\\ 
+    &&\frac{t \to r}{\text{ifz } t \text{ then } u  \text{ else } v \to
+                    \text{ifz } r \text{ then } u  \text{ else } v }\\
+    &&\frac{t \to r}{\mu f.t \to \mu f.r} && \text{(sólo para reducción fuerte)}\\ 
+    &&\frac{t \to r}{\text{let } x=t \text{ in } s \to \text{let } x=r \text{ in } s}\\
+    &&\frac{t \to r}{\text{let } x=s \text{ in } t \to \text{let } x=s \text{ in } r} &&\text{si $s$ está en forma normal}\\
+\end{aligned}
+$$
+\end{document}
