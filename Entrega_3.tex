@@ -25,6 +25,8 @@
 \usepackage{xcolor}
 \usepackage{ulem}
 \usepackage{proof}
+\newenvironment{blue}{\Color{blue}}{\Color{black}}
+
 
 % Más documentación:
 % http://www.actual.world/resources/tex/doc/Proofs.pdf
@@ -46,12 +48,13 @@ Tipar el siguiente termino: $(\lambda x:A.\lambda y:B .x+yx)$\\
 
 \subsection*{Solución}
 $$
-\infer[\Rightarrow_i]{\vdash (\lambda x:nat .\lambda y:B .x+yx) :nat \Rightarrow nat}{
+\infer[\Rightarrow_i]{\vdash (\lambda x:nat .\lambda y:nat\Rightarrow nat .x+yx) :nat \Rightarrow nat \Rightarrow nat\Rightarrow nat}{
 \infer[\Rightarrow_i]{  x:nat \vdash (\lambda y:nat\Rightarrow nat.x + y x) : nat \Rightarrow nat \Rightarrow nat }{
-\infer[\otimes]{\Gamma = x:nat,y:nat\Rightarrow nat \vdash  (x + y x) : nat}{
-    \infer[ax_v]{\Gamma\vdash x:nat}{} & 
-    \infer[\Rightarrow_e]{\Gamma \vdash (yx):nat}{ \infer[ax_v]{\Gamma \vdash y :nat \Rightarrow nat}{} &  \infer[ax_v]{\Gamma \vdash x:nat}{} }
+\infer[\otimes]{\Gamma \vdash  (x + y x) : nat}{
+    \infer[ax_v]{\Gamma\vdash x:nat}{} & \infer[\Rightarrow_e]{\Gamma \vdash (yx):nat}{ 
+        \infer[ax_v]{\Gamma \vdash y :nat \Rightarrow nat}{} &  \infer[ax_v]{\Gamma \vdash x:nat}{} }
                      }
                       }}
 $$
+$\Gamma = x:nat,y:nat\Rightarrow nat$
 \end{document}
