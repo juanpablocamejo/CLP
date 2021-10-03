@@ -1,0 +1,74 @@
+\documentclass[a4paper,10pt]{article} % a4paper es obvio y 10pt es el tamaño
+
+\usepackage[utf8]{inputenc} % Permite escribir acentos (leer este archivo en 
+                            % UTF8!)
+
+\usepackage[T1]{fontenc}    % Permite que el texto que se produce se pueda
+                            % copiar (incluídos los símbolos)
+
+\usepackage[spanish]{babel} % Hace que las palabras claves (como la fecha)
+                            % salgan en español
+
+
+\usepackage{fullpage}       % Pone márgenes más chicos que los estándares
+
+\setlength\parindent{0em}   % Elimina la identación
+
+\usepackage{amsmath,amssymb}        % Provee el entorno align*, entre otros
+
+\usepackage{url}            % No necesario en general. Es para poner links 
+                            % (como el que puse a overleaf)
+
+\usepackage{proof}          % Este paquete da el comando \infer. 
+
+\usepackage{logicproof}          % Sirve para escribir pruebas en estilo Fitch como lo hace Huth y Ryan
+\usepackage{xcolor}
+\usepackage{ulem}
+\usepackage{proof}
+\newenvironment{blue}{\Color{blue}}{\Color{black}}
+\newcommand{\To}[0]{\Rightarrow}
+\newcommand{\vd}[0]{\vdash}
+\newcommand\fun[2]{\ensuremath{\lambda {#1}{.}{#2}}}
+
+
+
+% Más documentación:
+% http://www.actual.world/resources/tex/doc/Proofs.pdf
+
+\title{Entrega 5}
+\author{Juan Pablo Camejo (19803)}
+\date{\today}  % En vez de \today pueden poner el texto que quieran (como la 
+               % fecha de ayer por ejemplo). Si ponen \today, queda la fecha
+               % de compilación
+
+\begin{document}
+
+
+\maketitle   % Pone el título autor y fecha definidos antes
+
+\section*{Ejercicio}
+Tipar el siguiente termino, usando tipos polimórficos: 
+\subsubsection*{ $(\fun f{ff})(\fun xx)$}
+
+
+\section*{Solución}
+
+$$
+\infer[\To_e]{(\vd \fun f{ff})(\fun xx) :[B]}{
+      \infer[\To_i]{ \vd\fun f{ff} :[(A \To A) \To B] }{
+          \infer[\To_e]{f:[A \To A] \vd ff : [B]}{
+               f:[A \To A] \vd \color{red}f:[(A \To A)\To B]
+             & f:[A \To A] \vd \color{red}f:[A \To A]
+          }
+      } 
+    & \infer[\To_i]{\vd \fun xx : [A \To A]}{ 
+          \infer[ax_v]{x:[A]\vd x:[A]}{} 
+        & \infer[ax_v]{x:[A]\vd x:[A]}{}
+    }
+}
+$$
+
+Al aplicar la regla de $\To_e$ se llega a una contradicción entre los tipos marcados en rojo.\\
+(En este punto no se puede agregar cuantificadores porque la regla de $\To_e$ no lo permite)\\
+Por lo tanto, el termino $(\fun f{ff})(\fun xx)$ no se puede tipar.
+\end{document}
